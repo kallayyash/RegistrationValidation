@@ -61,8 +61,7 @@ class Register extends Component {
     }
 
     onSubmit = values => {
-        // console.log(values);
-     
+     alert('Successful Registered');
     }
 
 
@@ -117,7 +116,6 @@ class Register extends Component {
     }
 
     render() {
-        console.log("here");
         const { handleSubmit } = this.props;
         return (
             <View style={[styles.appContainer, styles.whiteBackground]}>

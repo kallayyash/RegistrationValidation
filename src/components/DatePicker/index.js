@@ -41,7 +41,7 @@ class DatePicker extends Component {
     }
 
     render() {
-        alert(this.props.value);
+       
         return (
             <View style={[styles.textInputContainer, this.props.style]}>
                 <TouchableWithoutFeedback onPress={this.openDatePicker}>
