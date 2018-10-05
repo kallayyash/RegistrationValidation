@@ -61,14 +61,13 @@ class Register extends Component {
     }
 
     onSubmit = values => {
-        console.log(values);
-        alert("no errors");
+        // console.log(values);
+     
     }
 
 
     renderTextInput = (field) => {
-        const { meta: { touched, error }, placeholder, keyboardType, isPassword, label, secureTextEntry, input: { onChange, ...restInput } } = field;
-        console.log(field)
+        const { meta: { touched, error }, placeholder, keyboardType, onIconPress, isPassword, label, secureTextEntry, input: { onChange, ...restInput } } = field;
         return (
             <View>
                 <InputText
@@ -76,6 +75,7 @@ class Register extends Component {
                     keyboardType={keyboardType}
                     isPassword={isPassword}
                     label={label}
+                    onIconPress={onIconPress}
                     secureTextEntry={secureTextEntry}
                     placeholder={placeholder}
                     {...restInput} />
@@ -86,7 +86,6 @@ class Register extends Component {
 
     renderDatePicker = (field) => {
         const { meta: { touched, error }, placeholder, label, input: { onChange, ...restInput } } = field;
-        console.log(field);
         return (
             <View>
                 <DatePicker
@@ -94,7 +93,7 @@ class Register extends Component {
                     onChangeText={onChange}
                     value={this.state.dateOfBirth}
                     placeholder={placeholder}
-                    onChangeDate={value => this.onChange("dateOfBirth", value)}
+                    onChangeDate={onChange}
                     {...restInput} />
                 <Text style={styles.errorText}>{touched ? error : ""}</Text>
             </View>
@@ -102,14 +101,15 @@ class Register extends Component {
     }
 
     renderPhone = (field) => {
-        const { meta: { touched, error }, placeholder, label, input: { onChange, ...restInput } } = field;
-        console.log(field);
+        const { meta: { touched, error }, placeholder, maxLength, keyboardType, label, input: { onChange, ...restInput } } = field;
         return (
             <View>
                 <Phone
                     label={label}
                     onChangeText={onChange}
+                    keyboardType={keyboardType}
                     placeholder={placeholder}
+                    maxLength={maxLength}
                     {...restInput} />
                 <Text style={styles.errorText}>{touched ? error : ""}</Text>
             </View>
@@ -248,6 +248,7 @@ const validate = values => {
         errors.name = "Please enter a valid name"
     }
 
+
     if (!values.lastName) {
         errors.lastName = "Rerquired"
     } else if (values.lastName.length < 8) {
@@ -258,9 +259,12 @@ const validate = values => {
         errors.name = "Please enter a valid name"
     }
 
+
     if (!values.datePicker) {
         errors.datePicker = "Required"
     }
+
+
     if (!values.phone) {
         errors.phone = "Required"
     } else if (!validator.isNumeric(values.phone.trim())) {
@@ -269,17 +273,23 @@ const validate = values => {
         errors.lastName = "Mobile number should be 10 digits";
     }
 
+
     if (!values.email) {
         errors.email = "Required"
     } else if (!validator.isEmail(values.email.trim())) {
         errors.email = "Please enter a valid email"
     }
+    
 
     if (!values.password) {
         errors.password = "Required"
     }
+
+
     if (!values.confirmpassword) {
         errors.confirmpassword = "Required"
+    }else if(values.confirmpassword !== values.password){
+        errors.confirmpassword = "Password Mismatched!"
     }
 
     return errors;
@@ -293,5 +303,5 @@ const mapDispatchToProps = dispatch => ({});
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     reduxForm({ form: "register", validate })
-)(Register);
+    )(Register);
 

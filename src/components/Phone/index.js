@@ -38,7 +38,6 @@ class Phone extends Component {
                         returnKeyType={this.props.returnKeyType}
                         secureTextEntry={this.props.secureTextEntry}
                         keyboardType= {this.props.keyboardType}
-                        maxLength= {this.props.maxLength}
                         value="+31"
                         onChangeText= {this.props.onChangeText} />
                     <View style={{marginTop: 15, height: 25, borderRightWidth: 1, borderColor: "rgba(51, 51, 51, 0.6)"}}></View>
